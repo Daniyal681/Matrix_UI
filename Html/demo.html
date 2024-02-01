@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="../JS/kit.fontawesome.js"></script>
+  <script src="../JS/xlsx.full.min.js"></script>
+  <script src="../JS/jquery-3.1.1.min.js"></script>
+  <script src="../JS/jquery-3.6.0.min.js"></script>
+  <script src="../JS/jquery-datatables.min.js"></script>
+  <script src="../JS/bootstrap.min-4.js"></script>
+  <script src="../JS/datatables.button.min.js"></script>
+  <link rel="stylesheet" href="../CSS/bootstrap.min-4.css">
+  <link rel="stylesheet" href="../CSS/bootstrap.min-5.css">
+  <link rel="stylesheet" href="../CSS/datatables.min.css">
+  <link rel="stylesheet" href="../CSS/databtables.bootstrap.buttons.min.css">
+  <link rel="stylesheet" href="../CSS/sideBarStyle.css">
+  <link rel="stylesheet" href="../CSS/datatableStyle.css">
+
+  <!-- JSperadsheet -->
+
+  <script src="https://jsuites.net/v4/jsuites.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/jspreadsheet.min.css"
+    type="text/css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/index.min.js"></script>
+
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+
+<body>
+
+  <div class="card col-md-2 cardBrand d-flex align-items-start txtSize" id="modalcard">
+    <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search brands">
+
+    <div id="checkboxContainer">
+      <!-- Checkboxes will be dynamically added here -->
+    </div>
+  </div>
+
+
+
+  <script>
+    $(document).ready(function () {
+      // Initial list of brands
+      const brands = [
+        'Infinix', 'Realme', 'Samsung', 'Dell', 'Sony',
+        'Itel', 'Tecno', 'Huawei', 'Nokia', 'Other Brands'
+      ];
+
+      // Function to generate checkboxes based on the search query
+      function generateCheckboxes(query) {
+        const container = $('#checkboxContainer');
+        container.empty(); // Clear previous checkboxes
+
+        for (const brand of brands) {
+          // Check if the brand matches the search query
+          if (brand.toLowerCase().includes(query.toLowerCase())) {
+            const checkbox = $('<div class="form-check ml-4">');
+            checkbox.append(`
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label">${brand}</label>
+                    `);
+            container.append(checkbox);
+          }
+        }
+      }
+
+      // Initial generation of checkboxes
+      generateCheckboxes('');
+
+      // Event listener for search input
+      $('#searchInput').on('input', function () {
+        const searchQuery = $(this).val();
+        generateCheckboxes(searchQuery);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

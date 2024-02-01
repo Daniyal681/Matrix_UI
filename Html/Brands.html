@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brands</title>
+
+    <script src="../JS/kit.fontawesome.js"></script>
+    <script src="../JS/xlsx.full.min.js"></script>
+    <script src="../JS/jquery-3.1.1.min.js"></script>
+    <script src="../JS/jquery-3.6.0.min.js"></script>
+    <script src="../JS/jquery-datatables.min.js"></script>
+    <script src="../JS/bootstrap.min-4.js"></script>
+    <script src="../JS/datatables.button.min.js"></script>
+    <link rel="stylesheet" href="../CSS/bootstrap.min-4.css">
+    <link rel="stylesheet" href="../CSS/bootstrap.min-5.css">
+    <link rel="stylesheet" href="../CSS/datatables.min.css">
+    <link rel="stylesheet" href="../CSS/databtables.bootstrap.buttons.min.css">
+    <link rel="stylesheet" href="../CSS/sideBarStyle.css">
+    <link rel="stylesheet" href="../CSS/datatableStyle.css">
+
+    <!-- JSperadsheet -->
+
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/jspreadsheet.min.css"
+        type="text/css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jspreadsheet-ce/dist/index.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Switch -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css"
+        rel="stylesheet">
+    <script
+        src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
+
+
+
+    <style>
+        #modalcard {
+            background-color: #fff;
+            padding: 1em;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+            border-radius: 7px;
+        }
+
+        .cardBrand {
+
+            width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <a href="dashboard.html">INOVI SOLUTIONS</a>
+                </div>
+                <ul id="sideBarMenus" class="sidebar-nav">
+                    <!-- Generated SideBar -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand p-0 border-bottom">
+                <!-- Button for sidebar toggle -->
+                <button class="btn" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navRightMenus">
+                    <ul class="navbar-nav">
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="form-inline justify-content-between col-md-12 mb-2">
+
+
+                            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalLongTitle">Brands</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="formTopbar">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="input-group input-group-sm mb-3 ">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                Brand ID
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Auto" disabled>
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-3 ">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                Brand Name
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="">
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-3 ">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                GL Inventory Account
+                                                            </div>
+                                                            <input type="number" id="getGlAccount"
+                                                                class="form-control col-sm-2" placeholder="345">
+                                                            <input type="text" id="setGlAccount" class="form-control"
+                                                                placeholder="">
+                                                        </div>
+
+                                                        <div class="input-group input-group-sm mb-3">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                GL Account For Inventory In Transit
+                                                            </div>
+                                                            <input type="text" id="getGlTransit" class="form-control col-sm-2"
+                                                                placeholder="345">
+                                                            <input type="text" id="setGlTransit" class="form-control" placeholder="">
+                                                        </div>
+
+                                                        <div class="input-group input-group-sm mb-3">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                GL Account For Sales Return
+                                                            </div>
+                                                            <input type="text" id="getGlReturn" class="form-control col-sm-2"
+                                                                placeholder="345">
+                                                            <input type="text" id="setGlReturn" class="form-control" placeholder="">
+
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-3">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                GL Account For Cost Of Sales
+                                                            </div>
+                                                            <input type="text" id="getGlSales" class="form-control col-sm-2"
+                                                                placeholder="345">
+                                                            <input type="text" id="setGlSales" class="form-control" placeholder="">
+
+                                                        </div>
+                                                        <div class="input-group input-group-sm mb-3">
+                                                            <div class="input-group-text col-sm-4 txtSize">
+                                                                GL Account For Inventory Adjustment
+                                                            </div>
+                                                            <input type="text" id="getGlAdjustment" class="form-control col-sm-2"
+                                                                placeholder="345">
+                                                            <input type="text" id="setGlAdjustment" class="form-control" placeholder="">
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary m-2 col-md-2"
+                                                data-bs-target="#ModalToggle2" data-bs-toggle="modal"
+                                                data-bs-dismiss="modal">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="text-decoration-none btn-sm btn-primary m-2" data-bs-toggle="modal"
+                                href="#ModalCenter" role="button">
+                                <style></style><i class="fa-solid fa-plus"></i> Add
+                            </a>
+
+
+                        </div>
+
+
+                        <!-------------- Table ----------------->
+                        <div class="container-fluid">
+                            <div class="tablecard small col-md-12">
+                                <table id="myTable" class="table table-striped table-bordered small">
+                                    <thead>
+                                        <tr class="font-weight-bold text-center">
+                                            <td>Brand ID</td>
+                                            <td>Brand Name</td>
+                                            <td>GL Inventory Acc</td>
+                                            <td>GL Acc For Inventory In Transit</td>
+                                            <td>GL Acc For Sales Return</td>
+                                            <td>GL Acc For Cost Of Sales</td>
+                                            <td>GL Acc For Inventory Adjustment</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <script src="../JS/getset.js"></script>
+    <script src="../JS/Jspreadsheet.js"></script>
+    <script src="../JS/dataTableScript.js"></script>
+    <script src="../JS/datatables.bootstrap.buttons.js"></script>
+    <script src="../JS/bootstrap.bundle.min-5.js"></script>
+    <script src="../JS/sideBarScript.js"></script>
+    <script>
+
+    </script>
+</body>
+
+
+</html>
